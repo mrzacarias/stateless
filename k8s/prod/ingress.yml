@@ -18,7 +18,7 @@ spec:
   - host: stateless.mrzacarias.com
     http:
       paths:
-      - path: /
+      - path: /stateless
         pathType: Prefix
         backend:
           service:
