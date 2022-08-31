@@ -1,24 +1,27 @@
-# apiVersion: extensions/v1beta1
-# kind: Ingress
-# metadata:
-#   name: stateless
-#   namespace: default
-#   labels:
-#     app: stateless
-#     env: prod
-#   annotations:
-#     kubernetes.io/tls-acme: "true"
-#     kubernetes.io/ingress.allow-http: "false"
-#     external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
-# spec:
-#   tls:
-#   - hosts:
-#     - stateless.prod.evqt.net
-#     secretName: stateless-tls
-#   rules:
-#   - host: stateless.prod.evqt.net
-#     http:
-#       paths:
-#       - backend:
-#           serviceName: stateless
-#           servicePort: 80
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: stateless
+  namespace: default
+  labels:
+    app: stateless
+    env: prod
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-staging"
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  tls:
+  - hosts:
+    - stateless.mrzacarias.com
+    secretName: stateless-tls
+  rules:
+  - host: stateless.mrzacarias.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: stateless
+            port:
+              number: 80
