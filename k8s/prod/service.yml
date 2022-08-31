@@ -22,8 +22,8 @@ metadata:
   name: stateless-internal
   namespace: default
   labels:
-    env: prod
     app: stateless
+    env: prod
 spec:
   type: ClusterIP
   ports:
@@ -31,5 +31,5 @@ spec:
     port: 81
     targetPort: 8081
   selector:
-    env: prod
     app: stateless
+    env: prod

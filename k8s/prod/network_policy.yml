@@ -3,6 +3,9 @@ kind: NetworkPolicy
 metadata:
   name: stateless
   namespace: default
+  labels:
+    app: stateless
+    env: prod
 spec:
   podSelector:
     matchLabels:
