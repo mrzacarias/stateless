@@ -1,4 +1,4 @@
-module github.com/mrzacarias/app-test
+module github.com/mrzacarias/stateless
 
 go 1.17
 
