@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stateless
+  namespace: default
+  labels:
+    app: stateless
+    env: prod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stateless
+      env: prod
+  template:
+    metadata:
+      labels:
+        app: stateless
+        env: prod
+    spec:
+      containers:
+      - name: stateless
+        image: <registry_host>/<registry_bucket>/stateless:<image_id> # change this later to the correct repository and image id!
+        resources:
+          limits:
+            cpu: 100m
+            memory: 100Mi
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        livenessProbe:
+          httpGet:
+            path: /healthcheck
+            port: 8080
+          initialDelaySeconds: 1
+          periodSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 20
+        env:
+        - name: STL_APP_ENVIRONMENT
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.labels['env']
+        - name: STL_PORT
+          value: "8080"
+        - name: STL_METRICS_PORT
+          value: "8081"
+        - name: STL_GITHUB_EMOJI_URL
+          value: "https://api.github.com/emojis"

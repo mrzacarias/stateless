@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: stateless
+  namespace: default
+  labels:
+    app: stateless
+    env: prod
+spec:
+  type: NodePort
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+  selector:
+    app: stateless
+    env: prod
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: stateless-internal
+  namespace: default
+  labels:
+    env: prod
+    app: stateless
+spec:
+  type: ClusterIP
+  ports:
+  - name: internal
+    port: 81
+    targetPort: 8081
+  selector:
+    env: prod
+    app: stateless

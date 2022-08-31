@@ -1,0 +1,24 @@
+# apiVersion: extensions/v1beta1
+# kind: Ingress
+# metadata:
+#   name: stateless
+#   annotations:
+#     kubernetes.io/tls-acme: "true"
+#     kubernetes.io/ingress.allow-http: "false"
+#     external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
+#   namespace: default
+#   labels:
+#     env: prod
+#     app: stateless
+# spec:
+#   tls:
+#   - hosts:
+#     - stateless.prod.evqt.net
+#     secretName: stateless-tls
+#   rules:
+#   - host: stateless.prod.evqt.net
+#     http:
+#       paths:
+#       - backend:
+#           serviceName: stateless
+#           servicePort: 80
