@@ -8,20 +8,22 @@ metadata:
     env: prod
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt-staging"
-    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
+  ingressClassName: nginx
   tls:
   - hosts:
-    - stateless.mrzacarias.com
+    - a765aa0061e5a4d7aa5d63e86a1083dd-1954319865.us-east-1.elb.amazonaws.com
     secretName: stateless-tls
   rules:
-  - host: stateless.mrzacarias.com
-    http:
-      paths:
-      - path: /stateless
-        pathType: Prefix
-        backend:
-          service:
-            name: stateless
-            port:
-              number: 80
+    - host: a765aa0061e5a4d7aa5d63e86a1083dd-1954319865.us-east-1.elb.amazonaws.com
+      http:
+        paths:
+          - path: /stateless(/|$)(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: stateless
+                port:
+                  number: 80
