@@ -10,14 +10,15 @@ metadata:
     cert-manager.io/cluster-issuer: "letsencrypt-staging"
     nginx.ingress.kubernetes.io/use-regex: "true"
     nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
 spec:
   ingressClassName: nginx
   tls:
   - hosts:
-    - a765aa0061e5a4d7aa5d63e86a1083dd-1954319865.us-east-1.elb.amazonaws.com
+    - mrzacarias.com
     secretName: stateless-tls
   rules:
-    - host: a765aa0061e5a4d7aa5d63e86a1083dd-1954319865.us-east-1.elb.amazonaws.com
+    - host: mrzacarias.com
       http:
         paths:
           - path: /stateless(/|$)(.*)
